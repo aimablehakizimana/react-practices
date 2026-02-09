@@ -6,20 +6,17 @@
 
 html, body {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #root {
   width: 100%;
-  height: 100%;
 }
 
 .app {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background: #ffffff;
 }
 
@@ -81,11 +78,9 @@ html, body {
 }
 
 .main-content {
-  flex: 1;
   background: #f8f9fa;
   padding: 40px;
   width: 100%;
-  overflow-y: auto;
 }
 
 .page {
@@ -149,7 +144,6 @@ html, body {
   color: white;
   padding: 40px 30px;
   width: 100%;
-  margin-top: auto;
 }
 
 .footer-content {
@@ -331,8 +325,7 @@ strong {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .header-content {
