@@ -19,10 +19,6 @@ const Sidebar = ({ isOpen, onClose, onLogout }) => {
           <span className="nav-icon">ℹ️</span>
           About
         </Link>
-        <Link to="/programs" onClick={onClose}>
-          <span className="nav-icon">🎓</span>
-          Programs
-        </Link>
         <Link to="/team" onClick={onClose}>
           <span className="nav-icon">👥</span>
           Team
