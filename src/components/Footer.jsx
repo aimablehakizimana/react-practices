@@ -1,7 +1,7 @@
 const Footer = () => (
   <footer className="footer">
     <div className="footer-content">
-      <p>&copy; 2024 Garden TSS. All rights reserved.</p>
+      <p>&copy; 2024 Garden TSS. developed by Aimable HAKIZIMANA.</p>
       <div className="footer-links">
         <a href="/admissions">Admissions</a>
         <a href="/programs">Programs</a>
