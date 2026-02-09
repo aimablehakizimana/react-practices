@@ -1,6 +1,6 @@
 const Home = () => (
   <div className="page">
-    <h1>🏠 Welcome to Garden TSS</h1>
+    <h1> Welcome to Garden TSS</h1>
     <div className="content-grid">
       <div className="content-left">
         <h2>About Our School</h2>

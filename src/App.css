@@ -21,7 +21,7 @@ html, body {
 }
 
 .header {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 25px;
   text-align: center;
@@ -52,7 +52,7 @@ html, body {
   left: -280px;
   width: 280px;
   height: 100vh;
-  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
   transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 1000;
   box-shadow: 4px 0 20px rgba(0,0,0,0.2);
@@ -60,7 +60,7 @@ html, body {
 }
 
 .nav a {
-  color: #ecf0f1;
+  color: #e0e0e0;
   text-decoration: none;
   padding: 18px 25px;
   transition: all 0.3s ease;
@@ -72,13 +72,13 @@ html, body {
 }
 
 .nav a:hover {
-  background: rgba(52, 73, 94, 0.8);
-  border-left: 4px solid #3498db;
+  background: rgba(102, 126, 234, 0.2);
+  border-left: 4px solid #667eea;
   padding-left: 30px;
 }
 
 .main-content {
-  background: #f8f9fa;
+  background: #f5f7fa;
   padding: 40px;
   width: 100%;
 }
@@ -94,12 +94,12 @@ html, body {
 }
 
 .page h1 {
-  color: #2c3e50;
+  color: #1a1a2e;
   margin-bottom: 30px;
   font-size: 2.5rem;
   font-weight: 700;
   text-align: center;
-  border-bottom: 3px solid #3498db;
+  border-bottom: 3px solid #667eea;
   padding-bottom: 15px;
 }
 
@@ -131,16 +131,16 @@ html, body {
 .content-left h2,
 .content-center h2,
 .content-right h2 {
-  color: #2c3e50;
+  color: #1a1a2e;
   margin-bottom: 20px;
   font-size: 1.4rem;
   font-weight: 600;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid #667eea;
   padding-left: 15px;
 }
 
 .footer {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   color: white;
   padding: 40px 30px;
   width: 100%;
@@ -161,7 +161,7 @@ html, body {
 }
 
 .footer-links a {
-  color: #ecf0f1;
+  color: #e0e0e0;
   text-decoration: none;
   opacity: 0.9;
   transition: all 0.3s ease;
@@ -170,14 +170,14 @@ html, body {
 
 .footer-links a:hover {
   opacity: 1;
-  color: #3498db;
+  color: #667eea;
 }
 
 ul {
-  background: #f8f9fa;
+  background: #f5f7fa;
   padding: 20px;
   border-radius: 8px;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid #667eea;
   margin: 15px 0;
 }
 
@@ -192,7 +192,7 @@ li {
 
 li:before {
   content: '▸';
-  color: #3498db;
+  color: #667eea;
   position: absolute;
   left: 0;
   font-weight: bold;
@@ -206,7 +206,7 @@ p {
 }
 
 strong {
-  color: #2c3e50;
+  color: #1a1a2e;
   font-weight: 600;
 }
 
@@ -259,7 +259,7 @@ strong {
 .login-form h1 {
   text-align: center;
   margin-bottom: 40px;
-  color: #2c3e50;
+  color: #1a1a2e;
   font-weight: 700;
   font-size: 2rem;
 }
@@ -276,13 +276,13 @@ strong {
 
 .login-form input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #667eea;
 }
 
 .login-form button {
   width: 100%;
   padding: 15px;
-  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -294,11 +294,11 @@ strong {
 
 .login-form button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
 .logout-btn {
-  color: #ecf0f1;
+  color: #e0e0e0;
   background: none;
   border: none;
   padding: 18px 25px;
@@ -315,8 +315,8 @@ strong {
 }
 
 .logout-btn:hover {
-  background: rgba(231, 76, 60, 0.2);
-  border-left: 4px solid #e74c3c;
+  background: rgba(239, 83, 80, 0.2);
+  border-left: 4px solid #ef5350;
   padding-left: 30px;
 }
 
@@ -352,7 +352,7 @@ strong {
   font-size: 18px;
   width: 20px;
   text-align: center;
-  color: #3498db;
+  color: #667eea;
 }
 
 .sidebar.open {
@@ -508,11 +508,11 @@ strong {
 }
 
 .team-member {
-  background: #f8f9fa;
+  background: #f5f7fa;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid #667eea;
   transition: all 0.3s ease;
 }
 
@@ -522,14 +522,14 @@ strong {
 }
 
 .team-member h3 {
-  color: #2c3e50;
+  color: #1a1a2e;
   margin-bottom: 8px;
   font-size: 1.2rem;
   font-weight: 600;
 }
 
 .team-member p:first-of-type {
-  color: #3498db;
+  color: #667eea;
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -538,6 +538,16 @@ strong {
   color: #6c757d;
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border-left: 4px solid #c33;
+  margin: 15px 0;
+  font-weight: 500;
 }
 
 @media (min-width: 1025px) {
