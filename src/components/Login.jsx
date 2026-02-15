@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('')
@@ -8,30 +8,117 @@ const Login = ({ onLogin }) => {
   const [phone, setPhone] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isSignup, setIsSignup] = useState(false)
-  const [accounts, setAccounts] = useState([])
+  const [isForgotPassword, setIsForgotPassword] = useState(false)
+  const [error, setError] = useState('')
+  const [socialMedia, setSocialMedia] = useState([])
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    fetch('http://localhost:3000/api/social-media')
+      .then(res => res.json())
+      .then(data => setSocialMedia(data))
+      .catch(() => {})
+  }, [])
+
+  const handleToggleSignup = () => {
+    setIsSignup(!isSignup)
+    setIsForgotPassword(false)
+    setError('')
+    setUsername('')
+    setPassword('')
+    setEmail('')
+    setFullName('')
+    setPhone('')
+    setConfirmPassword('')
+  }
+
+  const handleToggleForgotPassword = () => {
+    setIsForgotPassword(!isForgotPassword)
+    setIsSignup(false)
+    setError('')
+    setUsername('')
+    setPassword('')
+    setEmail('')
+    setConfirmPassword('')
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (isSignup) {
+    setError('')
+    
+    if (isForgotPassword) {
       if (password !== confirmPassword) {
-        alert('Passwords do not match!')
+        setError('Passwords do not match!')
         return
       }
-      setAccounts([...accounts, { username, password, email, fullName, phone }])
-      alert('Account created! Please login.')
-      setIsSignup(false)
-      setUsername('')
-      setPassword('')
-      setEmail('')
-      setFullName('')
-      setPhone('')
-      setConfirmPassword('')
+      try {
+        const res = await fetch('http://localhost:3000/api/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, newPassword: password })
+        })
+        const data = await res.json()
+        if (data.success) {
+          setIsForgotPassword(false)
+          setUsername('')
+          setPassword('')
+          setEmail('')
+          setConfirmPassword('')
+          setError('Password reset successful! Please login.')
+        } else {
+          setError(data.message)
+        }
+      } catch (err) {
+        setError('Failed to reset password')
+      }
+      return
+    }
+    
+    if (isSignup) {
+      if (password !== confirmPassword) {
+        setError('Passwords do not match!')
+        return
+      }
+      try {
+        const res = await fetch('http://localhost:3000/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password, email, fullName, phone })
+        })
+        const data = await res.json()
+        if (data.success) {
+          setIsSignup(false)
+          setUsername('')
+          setPassword('')
+          setEmail('')
+          setFullName('')
+          setPhone('')
+          setConfirmPassword('')
+          setError('Account created! Please login.')
+        } else {
+          setError(data.message)
+        }
+      } catch (err) {
+        setError('Cannot connect to server. Please make sure the backend is running.')
+      }
     } else {
-      const account = accounts.find(acc => acc.username === username && acc.password === password)
-      if (account || (username && password)) {
-        onLogin()
-      } else {
-        alert('Invalid credentials')
+      try {
+        // Check if this is admin login
+        const isAdminLogin = username === 'aimable'
+        const endpoint = isAdminLogin ? '/api/admin-login' : '/api/login'
+        
+        const res = await fetch(`http://localhost:3000${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        })
+        const data = await res.json()
+        if (data.success) {
+          onLogin(isAdminLogin ? username : null)
+        } else {
+          setError(data.message)
+        }
+      } catch (err) {
+        setError('Cannot connect to server. Please make sure the backend is running.')
       }
     }
   }
@@ -39,7 +126,8 @@ const Login = ({ onLogin }) => {
   return (
     <div className="login-container">
       <div className="login-form">
-        <h1>{isSignup ? 'Create Account' : 'Garden TSS Login'}</h1>
+        <h1>{isForgotPassword ? 'Reset Password' : isSignup ? 'Create Account' : 'Garden TSS Login'}</h1>
+        {error && <div style={{ padding: '10px', marginBottom: '15px', background: error.includes('created') || error.includes('successful') ? '#d4edda' : '#f8d7da', color: error.includes('created') || error.includes('successful') ? '#155724' : '#721c24', borderRadius: '4px' }}>{error}</div>}
         <form onSubmit={handleSubmit}>
           {isSignup && (
             <>
@@ -66,6 +154,15 @@ const Login = ({ onLogin }) => {
               />
             </>
           )}
+          {isForgotPassword && (
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          )}
           <input
             type="text"
             placeholder="Username"
@@ -75,7 +172,7 @@ const Login = ({ onLogin }) => {
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder={isForgotPassword ? 'New Password' : 'Password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -89,24 +186,63 @@ const Login = ({ onLogin }) => {
               required
             />
           )}
-          <button type="submit">{isSignup ? 'Sign Up' : 'Login'}</button>
+          {isForgotPassword && (
+            <input
+              type="password"
+              placeholder="Confirm New Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          )}
+          <button type="submit">{isForgotPassword ? 'Reset Password' : isSignup ? 'Sign Up' : 'Login'}</button>
         </form>
-        <p style={{ textAlign: 'center', marginTop: '20px', color: '#6c757d' }}>
-          {isSignup ? 'Already have an account?' : "Don't have an account?"}
-          <button 
-            onClick={() => setIsSignup(!isSignup)}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
-              color: '#3498db', 
-              cursor: 'pointer', 
-              marginLeft: '5px',
-              textDecoration: 'underline'
-            }}
-          >
-            {isSignup ? 'Login' : 'Sign Up'}
-          </button>
-        </p>
+        {!isForgotPassword && (
+          <p style={{ textAlign: 'center', marginTop: '20px', color: '#6c757d' }}>
+            {isSignup ? 'Already have an account?' : "Don't have an account?"}
+            <button 
+              type="button"
+              onClick={handleToggleSignup}
+              style={{ 
+                background: 'none', 
+                border: 'none', 
+                color: '#3498db', 
+                cursor: 'pointer', 
+                marginLeft: '5px',
+                textDecoration: 'underline'
+              }}
+            >
+              {isSignup ? 'Login' : 'Sign Up'}
+            </button>
+          </p>
+        )}
+        {!isSignup && (
+          <p style={{ textAlign: 'center', marginTop: '10px' }}>
+            <button 
+              type="button"
+              onClick={handleToggleForgotPassword}
+              style={{ 
+                background: 'none', 
+                border: 'none', 
+                color: '#3498db', 
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                fontSize: '14px'
+              }}
+            >
+              {isForgotPassword ? 'Back to Login' : 'Forgot Password?'}
+            </button>
+          </p>
+        )}
+        {socialMedia.length > 0 && (
+          <div className="social-media-links">
+            {socialMedia.map(sm => (
+              <a key={sm.id} href={sm.url} target="_blank" rel="noopener noreferrer">
+                {sm.icon}
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
